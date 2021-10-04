@@ -45,7 +45,7 @@ def plot_pn_viz(pass_between, average_locations):
                      linewidth = 2.5, alpha = 1, zorder = 1, ax=ax)
 
 def pn_main(home_team,away_team,event_type):
-    col1,col2 = st.columns(2)
+    col1,col2 = st.beta_columns(2)
 
     df = choosed_match_dataframe(home_team,away_team,event_type)
     home_event = df[df[dct['team']] == home_team]
