@@ -1,6 +1,8 @@
 import pandas as pd
+import streamlit as st
 from utilites.utilites import Pitch_class, add_locations
-from utilites.data_loading import home_team,home_event,away_event,home_passes,away_passes
+from utilites.data_loading import choosed_match_dataframe
+
 from utilites.dictionary import my_dictionary as dct
 
 def pass_network(passes, event):
@@ -42,13 +44,22 @@ def plot_pn_viz(pass_between, average_locations):
     pitch.scatter(1.2*average_locations.x, .8*average_locations.y, s = 300, color = '#d3d3d3', edgecolors = 'black',
                      linewidth = 2.5, alpha = 1, zorder = 1, ax=ax)
 
-def pn_main(team):
-    if team == home_team: #home team's pass network
-        home_pass_between, home_average_locations = pass_network(home_passes, home_event) #gets home passes and average locations
-        plot_pn_viz(home_pass_between, home_average_locations) #Plots
-    else:
-        away_pass_between, away_average_locations = pass_network(away_passes, away_event)
-        plot_pn_viz(away_pass_between, away_average_locations)
+def pn_main(home_team,away_team,event_type):
+    col1,col2 = st.columns(2)
+
+    df = choosed_match_dataframe(home_team,away_team,event_type)
+    home_event = df[df[dct['team']] == home_team]
+    away_event = df[df[dct['team']] == away_team]
     
+    all_passes = df[df[dct['type']] == dct['Pass']]
+    home_passes = all_passes[all_passes[dct['team']]==home_team]
+    away_passes = all_passes[all_passes[dct['team']]==away_team]
+
+    home_pass_between, home_average_locations = pass_network(home_passes, home_event) #gets home passes and average locations
+    col1.pyplot(plot_pn_viz(home_pass_between, home_average_locations)) #Plots
+   
+    away_pass_between, away_average_locations = pass_network(away_passes, away_event)
+    col2.pyplot(plot_pn_viz(away_pass_between, away_average_locations))
+
 
 

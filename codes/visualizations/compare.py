@@ -1,14 +1,16 @@
 import matplotlib.pyplot as plt
 import streamlit as st
 from mplsoccer import VerticalPitch
-from utilites.data_loading import shots,home_team,away_team
+from utilites.data_loading import choosed_match_dataframe
 from utilites.utilites import nums_cumulative_sum
 from utilites.dictionary import my_dictionary as dct
 
-def xg_viz():
+def xg_viz(home_team, away_team,event_type):
     #shows xg graph using by shots
-    
     st.set_option('deprecation.showPyplotGlobalUse', False)
+
+    df = choosed_match_dataframe(home_team,away_team,event_type)
+    shots = df.loc[df[dct['type']] == dct['Shot']].set_index(dct['id'])
 
     a_xG = [0] #away xg
     h_xG = [0] #home xg

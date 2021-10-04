@@ -1,8 +1,16 @@
+import pandas as pd
 from utilites.utilites import Pitch_class
-from utilites.data_loading import goals
+from utilites.data_loading import choosed_match_dataframe
 from utilites.dictionary import my_dictionary as dct
 
-def show_goals_viz(home_team, away_team):
+def show_goals_viz(home_team,away_team,event_type):
+    df = choosed_match_dataframe(home_team,away_team,event_type)
+    goals = df.loc[df[dct['shot_outcome']] == dct['Goal']].set_index(dct['id'])
+    goals = goals[goals['period'] < 5]
+    own_goals = df.loc[df[dct['type']] == dct['Own Goal Against']].set_index(dct['id'])
+    goals = [goals, own_goals]
+    goals = pd.concat(goals)
+    goals.sort_values(by=dct['minute'], inplace=True)
 
     #Create pitches for the total number of goals
     pitch = Pitch_class()

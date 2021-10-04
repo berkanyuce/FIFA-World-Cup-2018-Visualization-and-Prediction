@@ -1,11 +1,11 @@
 from utilites.utilites import Pitch_class
-from utilites.data_loading import df
+from utilites.data_loading import choosed_match_dataframe
 from utilites.dictionary import my_dictionary as dct
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def show_lineup_viz():
-    
+def show_lineup_viz(home_team,away_team,event_type):
+    df = choosed_match_dataframe(home_team,away_team,event_type)
     #get lineup position ids
     home_position_id = []
     away_position_id = []
@@ -66,6 +66,5 @@ def show_lineup_viz():
         pitch.annotate(row.player_name, xy=(row.position_x, row.position_y-3), c='black', va='center',
                        ha='center', size=15, ax=ax)
         
-show_lineup_viz()
 
         

@@ -6,7 +6,9 @@ my_dictionary = {
     
     'Final' : 'Final', 
     'Third Place' : 'Third Place',
+    '3rd Place Final' : '3rd Place Final',
     'Semi Finals' : 'Semi Finals',
+    'Semi-finals' : 'Semi-finals',
     'Select Match' : 'Select Match',
     'home_team' : 'home_team',
     'away_team' : 'away_team',
@@ -17,6 +19,8 @@ my_dictionary = {
     'Player Analyze' : 'Player Analyze',
     'Select Event Type' : 'Select Event Type',
     'Quarter Finals' : 'Quarter Finals',
+    'Quarter-finals' : 'Quarter-finals',
+    'Round of 16' : 'Round of 16',
     'Round of 16' : 'Round of 16',
     'Group Stage' : 'Group Stage',
     'Select Group' : 'Select Group',

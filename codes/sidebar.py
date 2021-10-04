@@ -18,9 +18,12 @@ def show_x_finals(matches, row, s, f, event_type):
     vz.show_match_viz(event_type, home_team, away_team, choosed_match) #Call a function from visualization.py    
     
 def show_group_matches(group1_matches, match_results):
-    choosed_match = st.sidebar.selectbox(dct['Select Match'], group1_matches[:,3])
+    choosed_match = st.sidebar.selectbox(dct['Select Match'], group1_matches['Full_Match_Info'][:])
     choosed_match = match_results.index[match_results[dct['Full_Match_Info']] == choosed_match][0]
-    st.write(match_results[dct['Full_Match_Info']][choosed_match])
+    event_type = 'Group Stage'
+    home_team = match_results[dct['home_team']][choosed_match] #Get home team name
+    away_team = match_results[dct['away_team']][choosed_match] #Get away team name
+    vz.show_match_viz(event_type, home_team, away_team, choosed_match) #Call a function from visualization.py    
 
 #We have 3 analyze type
 choosed_analyze = st.sidebar.selectbox(dct['Select Analyze Type'], [dct['Match Analyze'],dct['Team Analyze'], dct['Player Analyze']])
@@ -32,15 +35,15 @@ if choosed_analyze == dct['Match Analyze']:
     #Final match's id is '1' and the others placed between numbers.
     #Group matches' methods are different
     if choosed_event == dct['Final']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 1, 2, choosed_event)
+        show_x_finals(match_results, dct['Full_Match_Info'], 1, 2, dct['Final'])
     elif choosed_event == dct['Third Place']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 0, 1, choosed_event)
+        show_x_finals(match_results, dct['Full_Match_Info'], 0, 1, dct['3rd Place Final'])
     elif choosed_event == dct['Semi Finals']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 62, 64, choosed_event)
+        show_x_finals(match_results, dct['Full_Match_Info'], 62, 64, dct['Semi-finals'])
     elif choosed_event == dct['Quarter Finals']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 50, 54, choosed_event)
+        show_x_finals(match_results, dct['Full_Match_Info'], 50, 54, dct['Quarter-finals'])
     elif choosed_event == dct['Round of 16']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 54, 62, choosed_event)
+        show_x_finals(match_results, dct['Full_Match_Info'], 54, 62, dct['Round of 16'])
     elif choosed_event == dct['Group Stage']:
         choosed_group = st.sidebar.selectbox(dct['Select Group'], [dct['Group A'],dct['Group B'],dct['Group C'],dct['Group D'],
                                                               dct['Group E'],dct['Group F'],dct['Group G'],dct['Group H']])
