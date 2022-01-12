@@ -1,4 +1,4 @@
-from utilites.utilites import Pitch_class
+from utilites.utility_functions import Pitch_class
 from utilites.data_loading import choosed_match_dataframe
 from utilites.dictionary import my_dictionary as dct
 import pandas as pd
@@ -18,41 +18,40 @@ def show_lineup_viz(home_team,away_team,event_type):
     home_player_name = []
     away_player_name = []
     
-    for i in range(len(df[dct['tactics']][0][dct['lineup']])):
-        home_position_id.append(df[dct['tactics']][0][dct['lineup']][i][dct['position']][dct['id']])
-        away_position_id.append(df[dct['tactics']][1][dct['lineup']][i][dct['position']][dct['id']])
+    for i in range(len(df['tactics'][0]['lineup'])):
+        home_position_id.append(df['tactics'][0]['lineup'][i]['position']['id'])
+        away_position_id.append(df['tactics'][1]['lineup'][i]['position']['id'])
         
-        home_jersey_number.append(df[dct['tactics']][0][dct['lineup']][i][dct['jersey_number']])
-        away_jersey_number.append(df[dct['tactics']][1][dct['lineup']][i][dct['jersey_number']])
+        home_jersey_number.append(df['tactics'][0]['lineup'][i]['jersey_number'])
+        away_jersey_number.append(df['tactics'][1]['lineup'][i]['jersey_number'])
     
-        home_player_name.append(df.tactics[0][dct['lineup']][i][dct['player']][dct['name']])
-        away_player_name.append(df.tactics[1][dct['lineup']][i][dct['player']][dct['name']])
+        home_player_name.append(df.tactics[0]['lineup'][i]['player']['name'])
+        away_player_name.append(df.tactics[1]['lineup'][i]['player']['name'])
     
-        
     #Add position's x and y values
     home_position_x = []
     home_position_y = []
     away_position_x = []
     away_position_y = []
     for i in range(11):
-        home_position_x.append(dct.get(home_position_id[i]).get(dct['x']) / 2)
-        home_position_y.append(dct.get(home_position_id[i]).get(dct['y']))
-        away_position_x.append(120 - (dct.get(away_position_id[i]).get(dct['x']) / 2))
-        away_position_y.append(dct.get(away_position_id[i]).get(dct['y']))
+        home_position_x.append(dct.get(home_position_id[i]).get('x') / 2)
+        home_position_y.append(dct.get(home_position_id[i]).get('y'))
+        away_position_x.append(120 - (dct.get(away_position_id[i]).get('x') / 2))
+        away_position_y.append(dct.get(away_position_id[i]).get('y'))
         
     #Merges all lineup infos into home/away_lineup
     home_lineup = pd.DataFrame(list(zip(home_position_id, home_player_name, home_position_x, home_position_y, home_jersey_number)),
-                   columns =[dct['position_id'], dct['player_name'], dct['position_x'], dct['position_y'], dct['jersey_number']])
+                   columns =['position_id', 'player_name', 'position_x', 'position_y', 'jersey_number'])
     away_lineup = pd.DataFrame(list(zip(away_position_id, away_player_name, away_position_x, away_position_y, away_jersey_number)),
-                   columns =[dct['position_id'], dct['player_name'], dct['position_x'], dct['position_y'], dct['jersey_number']])
+                   columns =['position_id', 'player_name', 'position_x', 'position_y', 'jersey_number'])
     
     #Create a pitch by using create_pitch.py
     pitch = Pitch_class()
     pitch, fig, ax = pitch.create_pitch()
     
     #Plotting dots
-    plt.scatter(home_lineup[dct['position_x']], home_lineup[dct['position_y']], color='black', s=700)
-    plt.scatter(away_lineup[dct['position_x']], away_lineup[dct['position_y']], color='red', s=700)
+    plt.scatter(home_lineup['position_x'], home_lineup['position_y'], color='black', s=700)
+    plt.scatter(away_lineup['position_x'], away_lineup['position_y'], color='red', s=700)
     
     #Plotting player names and jersey numbers
     for index, row in home_lineup.iterrows():
@@ -65,6 +64,3 @@ def show_lineup_viz(home_team,away_team,event_type):
                        ha='center', size=15, ax=ax)
         pitch.annotate(row.player_name, xy=(row.position_x, row.position_y-3), c='black', va='center',
                        ha='center', size=15, ax=ax)
-        
-
-        

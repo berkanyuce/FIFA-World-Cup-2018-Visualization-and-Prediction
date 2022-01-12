@@ -2,15 +2,16 @@ import matplotlib.pyplot as plt
 import streamlit as st
 from mplsoccer import VerticalPitch
 from utilites.data_loading import choosed_match_dataframe
-from utilites.utilites import nums_cumulative_sum
-from utilites.dictionary import my_dictionary as dct
+from utilites.utility_functions import nums_cumulative_sum
 
 def xg_viz(home_team, away_team,event_type):
     #shows xg graph using by shots
     st.set_option('deprecation.showPyplotGlobalUse', False)
 
     df = choosed_match_dataframe(home_team,away_team,event_type)
-    shots = df.loc[df[dct['type']] == dct['Shot']].set_index(dct['id'])
+    shots = df.loc[df['type'] == 'Shot'].set_index('id')
+    shots = shots[shots['period'] < 5]
+
 
     a_xG = [0] #away xg
     h_xG = [0] #home xg
@@ -18,13 +19,13 @@ def xg_viz(home_team, away_team,event_type):
     h_min = [0] #home shot minute
     
     #Plot graph using by statsbomb's xg values
-    for x in range(len(shots[dct['shot_statsbomb_xg']])):
-        if shots[dct['team']][x] == away_team:
-            a_xG.append(shots[dct['shot_statsbomb_xg']][x])
-            a_min.append(shots[dct['minute']][x])
-        if shots[dct['team']][x] == home_team:
-            h_xG.append(shots[dct['shot_statsbomb_xg']][x])
-            h_min.append(shots[dct['minute']][x])
+    for x in range(len(shots['shot_statsbomb_xg'])):
+        if shots['team'][x] == away_team:
+            a_xG.append(shots['shot_statsbomb_xg'][x])
+            a_min.append(shots['minute'][x])
+        if shots['team'][x] == home_team:
+            h_xG.append(shots['shot_statsbomb_xg'][x])
+            h_min.append(shots['minute'][x])
             
         #add xg values as cumulative
         a_cumulative = nums_cumulative_sum(a_xG)

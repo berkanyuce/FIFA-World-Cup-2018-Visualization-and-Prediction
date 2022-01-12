@@ -1,71 +1,69 @@
 import streamlit as st
 
-from utilites.dictionary import my_dictionary as dct
 import header.visualization as vz
-from utilites.data_loading import match_results,teams
+from utilites.data_loading import match_results
 from utilites.groups import (
 group_a_matches,group_b_matches,group_c_matches,
 group_d_matches,group_e_matches,group_f_matches,
 group_g_matches,group_h_matches)
+from prediction.prediction_report import prediction_report
 
 st.set_page_config(layout="wide")
 
 def show_x_finals(matches, row, s, f, event_type):
-    choosed_match =  st.sidebar.selectbox(dct['Select Match'], matches[row][s:f]) #Select a avalaible match 
+    choosed_match =  st.sidebar.selectbox('Select Match', matches[row][s:f]) #Select a avalaible match 
     choosed_match = matches.index[matches[row] == choosed_match][0] #Get match by given row value
-    home_team = matches[dct['home_team']][choosed_match] #Get home team name
-    away_team = matches[dct['away_team']][choosed_match] #Get away team name
+    home_team = matches['home_team'][choosed_match] #Get home team name
+    away_team = matches['away_team'][choosed_match] #Get away team name
     vz.show_match_viz(event_type, home_team, away_team, choosed_match) #Call a function from visualization.py    
     
 def show_group_matches(group1_matches, match_results):
-    choosed_match = st.sidebar.selectbox(dct['Select Match'], group1_matches['Full_Match_Info'][:])
-    choosed_match = match_results.index[match_results[dct['Full_Match_Info']] == choosed_match][0]
+    choosed_match = st.sidebar.selectbox('Select Match', group1_matches['Full_Match_Info'][:])
+    choosed_match = match_results.index[match_results['Full_Match_Info'] == choosed_match][0]
     event_type = 'Group Stage'
-    home_team = match_results[dct['home_team']][choosed_match] #Get home team name
-    away_team = match_results[dct['away_team']][choosed_match] #Get away team name
+    home_team = match_results['home_team'][choosed_match] #Get home team name
+    away_team = match_results['away_team'][choosed_match] #Get away team name
     vz.show_match_viz(event_type, home_team, away_team, choosed_match) #Call a function from visualization.py    
 
 #We have 3 analyze type
-choosed_analyze = st.sidebar.selectbox(dct['Select Analyze Type'], [dct['Match Analyze'],dct['Team Analyze'], dct['Player Analyze']])
+choosed_analyze = st.sidebar.selectbox('Select Analyze Type', ['Match Analyze', 'Tournament Prediction'])
 
 #Appropriate match information is called according to the selected analysis type and match.
-if choosed_analyze == dct['Match Analyze']:
-    choosed_event = st.sidebar.selectbox(dct['Select Event Type'], [dct['Final'],dct['Third Place'], dct['Semi Finals'], dct['Quarter Finals'], dct['Round of 16'], dct['Group Stage']])
+if choosed_analyze == 'Match Analyze':
+    choosed_event = st.sidebar.selectbox('Select Event Type', ['Final','Third Place', 'Semi Finals', 'Quarter Finals', 'Round of 16', 'Group Stage'])
     
     #Final match's id is '1' and the others placed between numbers.
     #Group matches' methods are different
-    if choosed_event == dct['Final']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 1, 2, dct['Final'])
-    elif choosed_event == dct['Third Place']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 0, 1, dct['3rd Place Final'])
-    elif choosed_event == dct['Semi Finals']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 62, 64, dct['Semi-finals'])
-    elif choosed_event == dct['Quarter Finals']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 50, 54, dct['Quarter-finals'])
-    elif choosed_event == dct['Round of 16']:
-        show_x_finals(match_results, dct['Full_Match_Info'], 54, 62, dct['Round of 16'])
-    elif choosed_event == dct['Group Stage']:
-        choosed_group = st.sidebar.selectbox(dct['Select Group'], [dct['Group A'],dct['Group B'],dct['Group C'],dct['Group D'],
-                                                              dct['Group E'],dct['Group F'],dct['Group G'],dct['Group H']])
+    if choosed_event == 'Final':
+        show_x_finals(match_results, 'Full_Match_Info', 1, 2, 'Final')
+    elif choosed_event == 'Third Place':
+        show_x_finals(match_results, 'Full_Match_Info', 0, 1, '3rd Place Final')
+    elif choosed_event == 'Semi Finals':
+        show_x_finals(match_results, 'Full_Match_Info', 62, 64, 'Semi-finals')
+    elif choosed_event == 'Quarter Finals':
+        show_x_finals(match_results, 'Full_Match_Info', 50, 54, 'Quarter-finals')
+    elif choosed_event == 'Round of 16':
+        show_x_finals(match_results, 'Full_Match_Info', 54, 62, 'Round of 16')
+    elif choosed_event == 'Group Stage':
+        choosed_group = st.sidebar.selectbox('Select Group', ['Group A','Group B','Group C','Group D',
+                                                              'Group E','Group F','Group G','Group H'])
         choosed_group = choosed_group[-1:]
-        if choosed_group == dct['A']:
+        if choosed_group == 'A':
             show_group_matches(group_a_matches, match_results)
-        elif choosed_group == dct['B']:
+        elif choosed_group == 'B':
             show_group_matches(group_b_matches, match_results)
-        elif choosed_group == dct['C']:
+        elif choosed_group == 'C':
             show_group_matches(group_c_matches, match_results)
-        elif choosed_group == dct['D']:
+        elif choosed_group == 'D':
             show_group_matches(group_d_matches, match_results)
-        elif choosed_group == dct['E']:
+        elif choosed_group == 'E':
             show_group_matches(group_e_matches, match_results)
-        elif choosed_group == dct['F']:
+        elif choosed_group == 'F':
             show_group_matches(group_f_matches, match_results)
-        elif choosed_group == dct['G']:
+        elif choosed_group == 'G':
             show_group_matches(group_g_matches, match_results)
         else:
             show_group_matches(group_h_matches, match_results)
 
-elif choosed_analyze == dct['Team Analyze']:
-    choosed_event = st.sidebar.selectbox(dct['Select Team'], teams[:])
-    
-
+elif choosed_analyze == 'Tournament Prediction':
+    prediction_report()
