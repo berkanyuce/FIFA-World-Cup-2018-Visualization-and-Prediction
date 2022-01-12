@@ -1,6 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from utilites.data_loading import DATADIR
+import urllib
 
 def prediction_report():
     
@@ -34,26 +35,28 @@ def prediction_report():
             power of the other teams. And, the small power differences between these teams are clearly visible. Also,
             According to this statistics, Spain is the most powerful team since 2007.
             ''')
-    HtmlFile = open(DATADIR + "codes/prediction/team_powers_scatter.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height=height)
+        
+    url = DATADIR + "codes/prediction/team_powers_scatter.html"
+    r = urllib.request.urlopen(url).read()
+    components.html(r, height=height)
+
+    url = DATADIR + "codes/prediction/team_powers_bar.html"
+    r = urllib.request.urlopen(url).read()
+    components.html(r, height=height)
     
-    HtmlFile = open(DATADIR + "codes/prediction/team_powers_bar.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height=height)
-    
-    HtmlFile = open(DATADIR + "codes/prediction/team_powers_3d.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height=height)
+    url = DATADIR + "codes/prediction/team_powers_3d.html"
+    r = urllib.request.urlopen(url).read()
+    components.html(r, height=height)
     
     st.text('''
             Looking at the teams' powers and goal differences, the teams that have more power have more goal differences
             not surprisingly. Also, goal differences are generally between -1 and 1. This means national matches are more 
             competitive. But, it is caused predicting the results more difficult.
             ''')
-    HtmlFile = open(DATADIR + "codes/prediction/team_powers_scores.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height=height)
+   
+    url = DATADIR + "codes/prediction/team_powers_scores.html"
+    r = urllib.request.urlopen(url).read()
+    components.html(r, height=height)
     
     st.subheader('Comparing Models')
 
@@ -65,22 +68,21 @@ def prediction_report():
             6500 tries the model is giving stable results. So, all matches simulated 6500 times.
             ''')
     
-    HtmlFile = open(DATADIR + "codes/prediction/compare_models_viz.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height=height)
+
+    url = DATADIR + "codes/prediction/compare_models_viz.html"
+    r = urllib.request.urlopen(url).read()
+    components.html(r, height=height)
     
-    HtmlFile = open(DATADIR + "codes/prediction/number_of_simulastions_viz.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    components.html(source_code, height=height)
+    url = DATADIR + "codes/prediction/number_of_simulastions_viz.html"
+    r = urllib.request.urlopen(url).read()
+    components.html(r, height=height)
     
     st.subheader('Predicting The Tournament')
     st.text('''
             The knockout stage was predicted by using Support Vector Machine as shown at below.
             ''')
    
-    from PIL import Image
-    image = Image.open(DATADIR + 'codes/prediction/world_cup_simulation_tree.jpeg')
-    st.image(image)
+    st.image(DATADIR + 'codes/prediction/world_cup_simulation_tree.jpeg')
     
     st.text('''
             The model failed this try. Because there are some suprised results like Spain - Russia. If one match is
@@ -90,8 +92,7 @@ def prediction_report():
             tournament when 100 dollars are bet on each match. This means 35 percent profit.
             ''')
     
-    image = Image.open(DATADIR + 'codes/prediction/match-by-match.jpeg')
-    st.image(image)
+    st.image(DATADIR + 'codes/prediction/match-by-match.jpeg')
     
     st.subheader('Conclusion')
     st.text('''
@@ -106,4 +107,4 @@ def prediction_report():
             
             At the other hands, If we can predict match by match, we can get good results and we have been shown that 
             profit can be made using machine learning.
-            ''')    
+            ''')   
