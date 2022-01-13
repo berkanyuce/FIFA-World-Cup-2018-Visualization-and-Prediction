@@ -1,8 +1,8 @@
-# FIFA World Cup 2018 Visualization Project
+# FIFA World Cup 2018 Visualization and Prediction Project
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/berkanyuce/FIFA-World-Cup-2018-Visualization/main/data/images/App%20Logo/app_logo-v3.png" width="250" height="250" align="center">
-<a href="https://share.streamlit.io/berkanyuce/fifa-world-cup-2018-visualization/main/codes/sidebar.py"><br><br>Demo</a>
+<a href="https://share.streamlit.io/berkanyuce/fifa-world-cup-2018-visualization/main/codes/sidebar.py" target="_blank" rel="noopener noreferrer"><br><br>Click for run project</a>
 </p>
 
 **Table of Contents**
@@ -23,11 +23,12 @@
 # About The Project
 https://user-images.githubusercontent.com/61622650/129944576-86ba076e-d48c-4d42-9f4f-823f307f2d95.mp4
 
-This project created for visualize FIFA World Cup 2018 datas which collected from Statsbomb. In this project, you can analyze matches, players and teams. 
+This project was created to visualize the FIFA World Cup 2018 data collected from Statsbomb and predict the last 16 matches. In this project, you can see the visualizations of statistics of the matches and look at the results of the machine learning model made for the tournament.
 
-There is only one match analyze in beta version. (France 4-2 Croatia, Final match) You can look **lineups**, **goals**, **heat maps**, **pass maps**, **shot maps**, **xG graphs**, **pass networks**.
+The visualized statistics are: **lineups**, **goals**, **heat maps**, **pass maps**, **shot maps**, **xG graphs**, **pass networks**.
+In addition, the development process of the machine learning model is also visualized.
 
-Purpose of beta, see the main issues and performance of project.
+This is the first version of the project. In the future, improvements can be made to the codes and visualizations.
 ### Built With
 * [Streamlit](https://streamlit.io)
 
@@ -38,10 +39,14 @@ Purpose of beta, see the main issues and performance of project.
 * [Seaborn](https://seaborn.pydata.org)
 * [Pandas](https://pandas.pydata.org)
 * [Numpy](https://numpy.org)
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+* [Scikit-Learn](https://scikit-learn.org/stable/)
+* [Plotly](https://plotly.com)
 
 # Getting Started
-During in the beta, the project works for only one match.
+If you want to run the codes on your own computer, you need to download the mandatory libraries. These libraries and how to install them are mentioned below.
 
+<i>The computer used during the development of the project is Macbook Air M1 8GB RAM</i>
 ### Installation
 After clone this project, open terminal and run:
 
@@ -73,9 +78,25 @@ or install via conda `conda install matplotlib`
 * Numpy
 `pip install numpy`
 
-# Usage
-During in the beta, the project works for only final match. To run it follow these introductions on sidebar which is placed at left side:
+* Plotly
+`pip install plotly`
 
+* Scikit-Learn
+`pip install -U scikit-learn`
+
+* BeautifulSoup
+`pip install beautifulsoup4`
+
+* requests
+`pip install requests`
+
+* urllib
+`pip install urllib3`
+
+# Usage
+The project provides visualizations of all matches and tournament prediction. To run the match visualizations, follow these steps in the left sidebar:
+
+Example,
 Match Analyze &rarr; Final Match &rarr; France 4-2 Croatia 
 
 <img width="329" alt="Ekran Resmi 2021-08-18 20 46 18" src="https://user-images.githubusercontent.com/61622650/129946951-88eb2152-2889-4a2a-8aae-f3c761252e6b.png">
@@ -85,12 +106,15 @@ After that, you can select visualization type from header menu. The options are 
 <img width="997" alt="Ekran Resmi 2021-08-18 20 47 51" src="https://user-images.githubusercontent.com/61622650/129947072-9455be93-a6cb-4950-b175-a31954ec6698.png">
 
 # Roadmap
-Because of beta, there are many technical, performance and visual issues on project. I add the other features as soon as possible.
+Future planned developments are as follows: <br>
+* Goals Visualization : Display of passes before the goal. <br>
+* Pass Network Visualization: Include all passes in the match and resize the nodes. <br>
+* Machine Learning Model: Preparing for the 2022 world cup with new datasets.
 
 # Contact
-I am open to advices. Please contact me.
+I'm open to advices. Please contact me.
 
-Berkan Yuce - contact@berkanyuce.com - [Linkedin](https://www.linkedin.com/in/berkanyuce/)
+Berkan Yuce <br> contact@berkanyuce.com <br> [Linkedin](https://www.linkedin.com/in/berkanyuce/)
 
 # Acknowledgements
 * [Statsbomb](https://statsbomb.com)
